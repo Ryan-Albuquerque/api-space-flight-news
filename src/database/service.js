@@ -13,6 +13,17 @@ const find = async (limit, skip) => {
     return list
 }
 
+const insertMany = async (bulk) => {
+    dbo = await db.getCollection(collectionName);
+    try {
+        const batch = await dbo.insertMany(bulk);
+        return batch;
+    } catch (error) {
+        throw error
+    }
+}
+
 services.find = find;
+services.insertMany = insertMany;
 
 module.exports = services;
