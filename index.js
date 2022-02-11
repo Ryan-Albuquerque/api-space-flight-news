@@ -13,6 +13,6 @@ app.use(express.json());
 app.use(routes);
 
 app.listen(port, async () => {
-    await database.prototype.connect();
+    await database.connect();
     console.log(`App listening on port ${port}!`)
 });
