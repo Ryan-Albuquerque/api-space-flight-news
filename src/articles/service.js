@@ -12,6 +12,17 @@ const list = async (options) => {
     return result;
 }
 
+const create = async (article) => {
+    const result = await database.insertOne(article);
+    return result;
+};
+
+const existArticleById = async (id) => {
+    return Boolean(await database.findOneById(id));
+} 
+
 service.list = list;
+service.create = create;
+service.existArticleById = existArticleById;
 
 module.exports = service;

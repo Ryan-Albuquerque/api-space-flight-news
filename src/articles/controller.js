@@ -13,6 +13,17 @@ const list = async (req, res, next) => {
     }
 }
 
+const create = async (req, res, next) => {
+    try {
+        const article = req.body;
+        await service.create(article);
+        return res.status(httpStatus.CREATED).json("Created");
+    } catch (error) {
+        next(error)
+    }
+}
+
 controller.list = list;
+controller.create = create;
 
 module.exports = controller;
