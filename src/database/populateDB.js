@@ -9,9 +9,7 @@ const populate = async () => {
     
     const result = await services.insertMany(res.data);
     
-    console.log(result);
-
-    return result;
+    console.log('Inserted!');
 }
 
 populate();
