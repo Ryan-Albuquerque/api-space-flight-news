@@ -13,6 +13,20 @@ const list = async (req, res, next) => {
     }
 }
 
+const get = async (req, res, next) => {
+    try {
+        const id = req.params;
+        const article = await service.findArticleById(id);
+        if (article) {
+            return res.status(httpStatus.OK).json({article});
+        } else {
+            return res.status(httpStatus.NOT_FOUND).json({message: 'article not found'})
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
 const create = async (req, res, next) => {
     try {
         const article = req.body;
@@ -25,5 +39,6 @@ const create = async (req, res, next) => {
 
 controller.list = list;
 controller.create = create;
+controller.get = get;
 
 module.exports = controller;

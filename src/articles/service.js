@@ -17,12 +17,18 @@ const create = async (article) => {
     return result;
 };
 
+const findArticleById = async ({id}) => {
+    const article = await database.findOneById(id); 
+    if(article) return article;
+}
+
 const existArticleById = async (id) => {
-    return Boolean(await database.findOneById(id));
+    return Boolean(await findArticleById(id));
 } 
 
 service.list = list;
 service.create = create;
 service.existArticleById = existArticleById;
+service.findArticleById = findArticleById;
 
 module.exports = service;

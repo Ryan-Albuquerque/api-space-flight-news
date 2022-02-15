@@ -5,6 +5,26 @@ const service = require('./service');
 
 const validator = {};
 
+const getArticle = async (req, res, next) => {
+    const articleId = req.params;
+
+    const articleExists = await service.existArticleById(articleId);
+
+    if(articleExists){
+        return res.status(httpStatus.BAD_REQUEST).json({message: 'Article is already added'}); 
+    }
+
+    next();
+}
+
+const validId = async (req, res, next) => {
+    const {id} = req.params;
+    if(!id || isNaN(id)){
+        return res.status(httpStatus.BAD_REQUEST).json({message: 'Article Id is not valid'});
+    }
+    next();
+}
+
 const createArticle = async (req, res, next) => {
     const article = req.body;
 
@@ -16,17 +36,13 @@ const createArticle = async (req, res, next) => {
         return res.status(httpStatus.BAD_REQUEST).json({message: validation.error.message})
     }
 
-    const articleExists = await service.existArticleById(article.id);
-
-    if(articleExists){
-        return res.status(httpStatus.BAD_REQUEST).json({message: 'Article is already added'}); 
-    }
-
     next();
 
 }
 
-validator.createArticle = createArticle;
 
+validator.createArticle = createArticle;
+validator.getArticle = getArticle;
+validator.validId = validId;
 
 module.exports = validator;

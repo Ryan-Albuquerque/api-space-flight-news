@@ -6,16 +6,25 @@ const collectionName = 'articles';
 
 const find = async (limit, skip) => {
     dbo = await db.getCollection(collectionName)
-    const list = await dbo.find()
-                          .skip(skip)
-                          .limit(limit)
-                          .toArray();
-    return list
+    try {
+        const list = await dbo.find()
+                              .skip(skip)
+                              .limit(limit)
+                              .toArray();
+        return list
+    } catch (error) {
+        throw error
+    }
 }
 
 const findOneById = async (id) => {
     dbo = await db.getCollection(collectionName)
-    return await dbo.findOne({id})
+    try { 
+        id = parseInt(id, 10);
+        return await dbo.findOne({id: id})
+    } catch (error) {
+        throw error
+    }
 
 }
 
